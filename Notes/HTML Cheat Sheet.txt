@@ -1,0 +1,42 @@
+HTML elements can be nested inside other elements. The enclosed element is the child of the enclosing parent element.
+Any visible content should be placed within the opening and closing <body> tags.
+Headings and sub-headings, <h1> to <h6> tags, are used to provide titles for sections of content.
+<p>, <span> and <div> tags specify text or blocks.
+The <em> and <strong> tags are used to emphasize text.
+Line breaks are created with the <br> tag.
+Ordered lists (<ol>) are numbered and unordered lists (<ul>) are bulleted.
+Images (<img>) and videos (<video>) can be added by linking to an existing source.
+The <!DOCTYPE html> declaration should always be the first line of code in your HTML files. This lets the browser know what version of HTML to expect.
+The <html> element will contain all of your HTML code.
+Information about the web page, like the title, belongs within the <head> of the page.
+You can add a title to your web page by using the <title> element, inside of the head.
+A webpage’s title appears in a browser’s tab.
+Anchor tags (<a>) are used to link to internal pages, external pages or content on the same page.
+You can create sections on a webpage and jump to them using <a> tags and adding ids to the elements you wish to jump to.
+Whitespace between HTML elements helps make code easier to read while not changing how elements appear in the browser.
+Indentation also helps make code easier to read. It makes parent-child relationships visible.
+Comments are written in HTML using the following syntax: <!-- comment -->.
+
+Commands:
+Nested tags: <body><child></child></body>
+Visible content: <body>...</body>
+Headings: <h1> through <h6>
+Paragraphs: <p>
+Inline text span: <span>
+Block division: <div>
+Italic emphasis: <em>
+Bold emphasis: <strong>
+Line break: <br/>
+Numbered list: <ol><li>
+Bulleted list: <ul><li>
+Embed image: <img src="..." />
+Embed video: <video src="..."></video>
+<!DOCTYPE html> : Place on line 1 to set HTML version.
+<html> : Wrap all code inside this root element.
+<head> : Place page metadata and title inside this element.
+<title> : Add inside the head to set the browser tab text.
+<a> : Use to link to internal, external, or page-bound content.
+href="#id" : Match with an element's id to create page anchors.
+Whitespace : Insert spacing between elements to improve readability.
+Indentation : Indent nested lines to show parent-child structural relationships.
+<!-- comment --> : Use this exact syntax to write hidden notes.
