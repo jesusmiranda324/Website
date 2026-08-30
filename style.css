@@ -1,0 +1,25 @@
+﻿.top {
+    border: 6px solid black;
+    display: flex;
+    justify-content: space-around;
+
+    #timer {
+        display: flex;
+    }
+
+    #Temp {
+        display: flex;
+    }
+
+    #newWebsite {
+        display: flex;
+    }
+}
+.inputBar {
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width: 100%;
+    text-align: center;
+}
