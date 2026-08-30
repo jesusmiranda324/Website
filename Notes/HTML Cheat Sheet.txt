@@ -16,6 +16,17 @@ You can create sections on a webpage and jump to them using <a> tags and adding 
 Whitespace between HTML elements helps make code easier to read while not changing how elements appear in the browser.
 Indentation also helps make code easier to read. It makes parent-child relationships visible.
 Comments are written in HTML using the following syntax: <!-- comment -->.
+The <table> element creates a table.
+The <tr> element adds rows to a table.
+To add data to a row, you can use the <td> element.
+Table headings clarify the meaning of data. Headings are added with the <th> element.
+Table data can span columns using the colspan attribute.
+Table data can span rows using the rowspan attribute.
+Tables can be split into three main sections: a head, a body, and a footer.
+A table’s head is created with the <thead> element.
+A table’s body is created with the <tbody> element.
+A table’s footer is created with the <tfoot> element.
+All the CSS properties you learned about in this course can be applied to tables and their data.
 
 Commands:
 Nested tags: <body><child></child></body>
@@ -40,3 +51,13 @@ href="#id" : Match with an element's id to create page anchors.
 Whitespace : Insert spacing between elements to improve readability.
 Indentation : Indent nested lines to show parent-child structural relationships.
 <!-- comment --> : Use this exact syntax to write hidden notes.
+<table>:Create a table
+<tr>:Create a table row
+<td>:Add data/cell
+<th>:Add a heading cell
+colspan="n":Cell spans n columns
+rowspan="n":Cell spans n rows
+<thead>:Table header section
+<tbody>:Table body section
+<tfoot>:Table footer section
+CSS:Style tables/cells

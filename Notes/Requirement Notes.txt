@@ -1,0 +1,23 @@
+Rating System
+  Import player's dataset
+  Select from datasets already imported
+Game Setup
+  Enter 3–5 team names
+  10 rounds
+Draft tracking
+  Salary cap — e.g. $110M (varies)
+Timer
+  2-minute timer
+  Next button
+Player Input
+  Input ID
+  Reveal player's name
+  Undo button
+Trading
+  Track # and $ for trades
+Money Ball Clips
+  Include money-ball clips
+Music
+  Music option
+  Disable music
+  Connect to music/ Spotify
