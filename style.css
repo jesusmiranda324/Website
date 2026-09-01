@@ -5,9 +5,11 @@
 
     #timer {
         display: flex;
+        flex-direction:column;
+        align-items:center;
     }
 
-    #Temp {
+    #temp {
         display: flex;
     }
 
@@ -15,6 +17,13 @@
         display: flex;
     }
 }
+.topButtons {
+    display: flex;
+    justify-content:space-between;
+}
+
+
+
 .inputBar {
     display: flex;
     flex-direction:column;
