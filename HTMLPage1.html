@@ -9,8 +9,14 @@
 <body>
     <div class="top">
       <div id="timer">
-        <h1>Timer Here!</h1>
-        <input type="button" value="Next">
+        <h1 id="time">02:00.000</h1>
+        <div id="buttons">
+            <input type="button" value="Start" id="startBtn">
+            <input type="button" value="Set">
+            <input type="button" value="Stop">
+            <input type="button" value="Next">
+      
+        </div>
       </div>
       
       <div id="newWebsite">    
@@ -26,7 +32,9 @@
             <input type="button" value="Undo (maybe move?)">
         </div>
         <div id="spotify">
-            <input type="button" value="Connect to Spotify...Somehow">
+            <button type="button" name="spotify" value="spotify" class="spotify-btn">
+                
+            </button>
         </div>
     </div>
     
@@ -42,11 +50,11 @@
     <div id="moneyTracker">
       <p>Money Tracker Screen Here(Move to top right. maybe overlay table?)</p>
     </div>
-    <class id="table" >
+    <div class="table" id="table" >
         <table>
             <thead>
                 <tr>
-                    <th>Blank</th>
+                    <th>Round</th>
                     <th>**Team 1**</th>
                     <th>**Team 2**</th>
                     <th>**Team 3**</th>
@@ -66,26 +74,27 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Insert Here!</td>
-                    <td>Input ID #</td>
-                    <td>Input ID #</td>
+                    <td>1</td>
+                    <td><input type="text" placeholder="Input ID"></td>
+                    <td><input type="text" placeholder="Input ID"></td>
                     <td>Etc...</td>
                 </tr>
                 <tr>
-                    <td>Insert Here!</td>
-                    <td>Input ID #</td>
-                    <td>Input ID #</td>
+                    <td>2</td>
+                    <td><input type="text" placeholder="Input ID"></td>
+                    <td><input type="text" placeholder="Input ID"></td>
                     <td>Etc...</td>
                 </tr>
                 <tr>
                     <td>Etc...</td>
-                    <td>Input ID #</td>
-                    <td>Input ID #</td>
+                    <td><input type="text" placeholder="Input ID"></td>
+                    <td><input type="text" placeholder="Input ID"></td>
                     <td>Etc...</td>
                 </tr>
 
             </tbody>
         </table>
-     </class>
+     </div>
+    <script src="Script1.js"></script>
 </body>
 </html>
