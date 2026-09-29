@@ -1,0 +1,11 @@
+# Visual Studio
+.vs/
+**/.vs/
+
+# Node / React
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+**/dist/

@@ -1,0 +1,70 @@
+.top {
+    background-image: url('Images/image1.avif');
+    border: 6px solid black;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+#timer {
+    justify-content: center;
+    align-items: center;
+}
+
+#time {
+    justify-content: center;
+    align-content: center;
+}
+
+#buttons {
+    justify-content: center;
+    align-items: center;
+}
+
+#temp {
+    display: flex;
+}
+
+#newWebsite {
+    display: flex;
+}
+
+.topButtons {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.inputBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+
+.table {
+    width: 100%;
+    display: table;
+    border: thin;
+    border: 1px solid black;
+}
+
+    .table th {
+        display: table-cell;
+        border: 1px solid black;
+    }
+
+    .table td {
+        display: table-cell;
+        border: 1px solid black;
+    }
+
+.spotify-btn {
+    background: url('Images/Spotify_Primary_Logo_RGB_Green.png') no-repeat center / contain;
+    width: 50px;
+    height: 50px;
+}
