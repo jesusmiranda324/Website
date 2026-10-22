@@ -1,5 +1,6 @@
 import React from "react";
 import Timer from "./Timer"; 
+import ExcelUpload from "./ExcelUpload";
 
 function App() {
   return (
@@ -41,13 +42,8 @@ function App() {
     
     
       <div className="inputBar" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", margin: "40px 0" }}>
-        <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", padding: "15px", border: "1px dashed #ccc", borderRadius: "6px" }}>
-          <label htmlFor="input-field" style={{ fontWeight: "bold" }}>Input IDs here!</label>
-          <div style={{ display: "flex", gap: "5px" }}>
-            <input type="text" id="input-field" name="input-field" style={{ padding: "6px" }} placeholder="Enter ID..." />
-            <input type="button" name="button" id="button" value="Import File" style={{ padding: "6px 12px" }} />
-          </div>
-        </form>
+            <ExcelUpload />
+        
       </div>
 
     
