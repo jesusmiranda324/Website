@@ -3,7 +3,7 @@ function BudgetDisplay({ budget = 150000000 }) {
         <span
             style={{
                 fontSize: "12px",
-                color: "#555", 
+                color: "#227f5d", 
                 fontWeight: "500"
             }}
         >
