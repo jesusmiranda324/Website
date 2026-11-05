@@ -3,6 +3,7 @@ import Timer from "./Timer";
 import Spotify from "./Spotify.jsx";
 import ExcelUpload from "./ExcelUpload";
 import PlayerLookup from "./PlayerLookup";
+import BudgetDisplay from "./BudgetDisplay.jsx";
 
 function App() {
   return (
@@ -88,10 +89,26 @@ function App() {
           <thead>
             <tr style={{ backgroundColor: "#eaeaea" }}>
               <th>Round</th>
-              <th>Team 1</th>
-              <th>Team 2</th>
-              <th>Team 3</th>
-              <th>Team 4</th>
+
+              <th>
+                <div>Team 1</div>
+                <BudgetDisplay budget={150000000} />
+              </th>
+
+              <th>
+                <div>Team 2</div>
+                <BudgetDisplay budget={150000000} />
+              </th>
+
+              <th>
+                <div>Team 3</div>
+                <BudgetDisplay budget={150000000} />
+              </th>
+
+              <th>
+                <div>Team 4</div>
+                <BudgetDisplay budget={150000000} />
+              </th>
             </tr>
           </thead>
 
