@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Timer from "./Timer";
 import Spotify from "./Spotify.jsx";
 import ExcelUpload from "./ExcelUpload";
@@ -6,6 +6,28 @@ import PlayerLookup from "./PlayerLookup";
 import BudgetDisplay from "./BudgetDisplay.jsx";
 
 function App() {
+  const [teamPicks, setTeamPicks] = useState([null, null, null, null]);
+  const [draftHistory, setDraftHistory] = useState([]);
+
+  function selectPlayer(teamIndex, player) {
+    setDraftHistory([...draftHistory, teamPicks]);
+
+    const updatedPicks = [...teamPicks];
+    updatedPicks[teamIndex] = player;
+
+    setTeamPicks(updatedPicks);
+  }
+
+  function undoDraft() {
+    if (draftHistory.length === 0) {
+      return;
+    }
+
+    const previousPicks = draftHistory[draftHistory.length - 1];
+
+    setTeamPicks(previousPicks);
+    setDraftHistory(draftHistory.slice(0, -1));
+  }
   return (
     <div
       className="top"
@@ -37,7 +59,12 @@ function App() {
 
           <div className="topButtons" style={{ display: "flex", gap: "10px" }}>
             <div id="undo">
-              <input type="button" value="Undo (maybe move?)" />
+              <button
+                  onClick={undoDraft}
+                  disabled={draftHistory.length === 0}
+              >
+                Undo
+              </button>
             </div>
 
             <div id="spotify">
@@ -113,14 +140,38 @@ function App() {
           </thead>
 
           <tbody>
-            <tr>
-              <td>1</td>
-              <td><PlayerLookup /></td>
-              <td><PlayerLookup /></td>
-              <td><PlayerLookup /></td>
-              <td>Etc...</td>
-            </tr>
-          </tbody>
+  <tr>
+    <td>1</td>
+
+    <td>
+      <PlayerLookup
+        player={teamPicks[0]}
+        onPlayerSelect={(player) => selectPlayer(0, player)}
+      />
+    </td>
+
+    <td>
+      <PlayerLookup
+        player={teamPicks[1]}
+        onPlayerSelect={(player) => selectPlayer(1, player)}
+      />
+    </td>
+
+    <td>
+      <PlayerLookup
+        player={teamPicks[2]}
+        onPlayerSelect={(player) => selectPlayer(2, player)}
+      />
+    </td>
+
+    <td>
+      <PlayerLookup
+        player={teamPicks[3]}
+        onPlayerSelect={(player) => selectPlayer(3, player)}
+      />
+    </td>
+  </tr>
+</tbody>
         </table>
       </div>
     </div>

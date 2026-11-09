@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 
-function PlayerLookup() {
+function PlayerLookup({player, onPlayerSelect}) {
   const [playerId, setPlayerId] = useState("");
-  const [player, setPlayer] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function searchPlayer() {
     if (!playerId.trim()) {
-      setPlayer(null);
+      onPlayerSelect(null);
       setError("");
       return;
     }
@@ -27,14 +26,14 @@ function PlayerLookup() {
       const data = await response.json();
 
       if (data.length > 0) {
-        setPlayer(data[0]);
+        onPlayerSelect(data[0]);
         setError("");
       } else {
-        setPlayer(null);
+        onPlayerSelect(null);
         setError("Player not found.");
       }
     } catch (err) {
-      setPlayer(null);
+      onPlayerSelect(null);
       setError("Could not connect to Rails.");
     } finally {
       setLoading(false);
