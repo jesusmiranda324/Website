@@ -43,6 +43,7 @@ function PlayerLookup() {
 
   return (
     <div className="player-lookup">
+   {!player && (
       <input
         type="text"
         placeholder="Search player ID..."
@@ -53,7 +54,7 @@ function PlayerLookup() {
           if (e.key === "Enter") searchPlayer();
         }}
       />
-
+    )}
       {loading && <p>Searching...</p>}
 
       {player && (
