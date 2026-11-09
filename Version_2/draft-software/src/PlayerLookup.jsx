@@ -1,10 +1,10 @@
-
 import React, { useState } from "react";
 
 function PlayerLookup() {
   const [playerId, setPlayerId] = useState("");
   const [player, setPlayer] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function searchPlayer() {
     if (!playerId.trim()) {
@@ -12,6 +12,8 @@ function PlayerLookup() {
       setError("");
       return;
     }
+
+    setLoading(true);
 
     try {
       const response = await fetch(
@@ -34,25 +36,33 @@ function PlayerLookup() {
     } catch (err) {
       setPlayer(null);
       setError("Could not connect to Rails.");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <div>
+    <div className="player-lookup">
       <input
         type="text"
-        placeholder="Input ID"
+        placeholder="Search player ID..."
         value={playerId}
         onChange={(e) => setPlayerId(e.target.value)}
         onBlur={searchPlayer}
         onKeyDown={(e) => {
           if (e.key === "Enter") searchPlayer();
         }}
-        style={{ width: "80%", padding: "4px" }}
       />
 
-      {player && <p>{player.name}</p>}
-      {error && <p>{error}</p>}
+      {loading && <p>Searching...</p>}
+
+      {player && (
+        <div className="player-result">
+          <strong>{player.name}</strong>
+        </div>
+      )}
+
+      {error && <p className="player-error">{error}</p>}
     </div>
   );
 }

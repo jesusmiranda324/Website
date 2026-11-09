@@ -1,70 +1,136 @@
+```css
+/* Main application */
 .top {
-    background-image: url('Images/image1.avif');
-    border: 6px solid black;
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
+  min-height: 100vh;
+  width: 100%;
+  padding: 24px;
+  background: #10141d;
+  color: #f1f5f9;
 }
 
+/* Header */
+#headerGroup {
+  color: #f8fafc;
+}
+
+#headerGroup h1 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+/* Timer */
 #timer {
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 #time {
-    justify-content: center;
-    align-content: center;
+  margin: 0;
+  color: #f97316;
+  font-size: 36px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
 }
 
 #buttons {
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
 }
 
-#temp {
-    display: flex;
+#buttons button,
+.topButtons input,
+.inputBar button {
+  padding: 9px 14px;
+  border: 1px solid #374151;
+  border-radius: 7px;
+  background: #1e293b;
+  color: #f8fafc;
 }
 
-#newWebsite {
-    display: flex;
+#buttons button:hover,
+.topButtons input:hover,
+.inputBar button:hover {
+  background: #334155;
 }
 
+/* Header buttons */
 .topButtons {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-
-
+/* Player import */
 .inputBar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 28px 0;
+  padding: 18px;
+  border: 1px solid #293548;
+  border-radius: 10px;
+  background: #1b2433;
 }
 
-
+/* Draft board */
 .table {
-    width: 100%;
-    display: table;
-    border: thin;
-    border: 1px solid black;
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #334155;
+  border-radius: 10px;
 }
 
-    .table th {
-        display: table-cell;
-        border: 1px solid black;
-    }
-
-    .table td {
-        display: table-cell;
-        border: 1px solid black;
-    }
-
-.spotify-btn {
-    background: url('Images/Spotify_Primary_Logo_RGB_Green.png') no-repeat center / contain;
-    width: 50px;
-    height: 50px;
+.table table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e2e8f0;
 }
+
+.table th {
+  padding: 16px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: #f8fafc;
+}
+
+.table td {
+  padding: 14px;
+  border: 1px solid #334155;
+  background: #151c29;
+}
+
+.table tbody tr:hover td {
+  background: #202b3c;
+}
+
+/* Player search */
+.player-lookup input {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  background: #101827;
+  color: #f8fafc;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .top {
+    padding: 12px;
+  }
+
+  #headerGroup h1 {
+    font-size: 24px;
+  }
+
+  #time {
+    font-size: 28px;
+  }
+}
+```
