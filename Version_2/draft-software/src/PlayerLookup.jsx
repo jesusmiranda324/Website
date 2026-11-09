@@ -57,10 +57,18 @@ function PlayerLookup() {
       {loading && <p>Searching...</p>}
 
       {player && (
-        <div className="player-result">
-          <strong>{player.name}</strong>
-        </div>
-      )}
+  <div className="player-result">
+    <br/>
+    <p><strong>ID:</strong> {player.player_id}</p>
+    <p><strong>Name:</strong> {player.name}</p>
+    <p>
+      <strong>Salary:</strong>{" "}
+      {player.salary != null
+        ? `$${Number(player.salary).toLocaleString()}`
+        : "N/A"}
+    </p>
+  </div>
+)}
 
       {error && <p className="player-error">{error}</p>}
     </div>
