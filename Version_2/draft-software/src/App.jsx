@@ -214,7 +214,7 @@ return;
                     }}
                 >
                     <h1 style={{ margin: "0 0 5px 0" }}>
-                        New Website!
+                        DraftBoss!
                     </h1>
 
                     <h3
@@ -224,7 +224,7 @@ return;
                             fontWeight: "normal"
                         }}
                     >
-                        Temp Layout
+                        Fantasy Basketball Drafter
                     </h3>
                 </div>
             </div>
