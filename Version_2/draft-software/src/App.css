@@ -133,4 +133,30 @@
     font-size: 28px;
   }
 }
+
+/* Normal draft cells */
+.table td {
+    padding: 14px;
+    border: 1px solid #334155;
+    background: #172235;
+    color: #f8fafc;
+}
+
+/* Active player selection */
+.table td.active-pick {
+    background: #153b3b;
+    outline: 2px solid #2dd4bf;
+    outline-offset: -2px;
+}
+
+/* Player information */
+.player-lookup {
+    color: #f8fafc;
+}
+
+.player-lookup input {
+    background: #111827;
+    color: #f8fafc;
+    border: 1px solid #475569;
+}
 ```

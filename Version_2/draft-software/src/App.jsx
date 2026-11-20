@@ -11,8 +11,14 @@ function App() {
     const [settings, setSettings] = useState(null);
     const [draftHistory, setDraftHistory] = useState([]);
     const [teamPicks, setTeamPicks] = useState([]);
-    const [timerStopSignal, setTimerStopSignal] = useState(0);
 
+    const [timerStopSignal, setTimerStopSignal] = useState(0);
+    const [timerStartSignal, setTimerStartSignal] = useState(0);
+
+    const [currentInputIndex, setCurrentInputIndex] = useState(0);
+    const [focusSignal, setFocusSignal] = useState(0);
+
+    // Start a new draft using the setup screen settings.
     function startDraft(newSettings) {
         setSettings(newSettings);
 
@@ -23,42 +29,103 @@ function App() {
 
         setTeamPicks(emptyPicks);
         setDraftHistory([]);
+
+        setCurrentInputIndex(0);
+        setFocusSignal((current) => current + 1);
+
         setTimerStopSignal(0);
+        setTimerStartSignal(0);
     }
 
+    // Select a player and automatically move to the next empty input.
     function selectPlayer(roundIndex, teamIndex, player) {
         if (!player) return;
+
+        const updatedPicks = teamPicks.map((round) => [...round]);
+
+        updatedPicks[roundIndex][teamIndex] = player;
 
         setDraftHistory((history) => [
             ...history,
             teamPicks.map((round) => [...round])
         ]);
 
-        setTeamPicks((currentPicks) => {
-            const updatedPicks = currentPicks.map((round) => [...round]);
-            updatedPicks[roundIndex][teamIndex] = player;
-            return updatedPicks;
-        });
+        setTeamPicks(updatedPicks);
 
+        // Stop the timer after a successful player selection.
         setTimerStopSignal((current) => current + 1);
+
+        const totalInputs = settings.rounds * settings.teams.length;
+
+        const selectedIndex =
+            roundIndex * settings.teams.length + teamIndex;
+
+        // Find the next empty player input.
+        for (let i = selectedIndex + 1; i < totalInputs; i++) {
+            const nextRoundIndex = Math.floor(
+                i / settings.teams.length
+            );
+
+            const nextTeamIndex = i % settings.teams.length;
+
+            if (!updatedPicks[nextRoundIndex][nextTeamIndex]) {
+                setCurrentInputIndex(i);
+                setFocusSignal((current) => current + 1);
+
+                // Start the timer for the next selection.
+                setTimerStartSignal((current) => current + 1);
+
+                return;
+            }
+        }
     }
 
+    // Undo the most recent player selection.
     function undoDraft() {
         if (draftHistory.length === 0) return;
 
-        const previousPicks = draftHistory[draftHistory.length - 1];
+        const previousPicks =
+            draftHistory[draftHistory.length - 1];
 
         setTeamPicks(previousPicks);
-        setDraftHistory((history) => history.slice(0, -1));
+
+        setDraftHistory((history) =>
+            history.slice(0, -1)
+        );
+
+        // Highlight and focus the first empty input.
+        const firstEmptyIndex = previousPicks.findIndex(
+            (round) => round.some((player) => !player)
+        );
+
+        if (firstEmptyIndex !== -1) {
+            const roundIndex = firstEmptyIndex;
+            const teamIndex = previousPicks[roundIndex].findIndex(
+                (player) => !player
+            );
+
+            const absoluteIndex =
+                roundIndex * settings.teams.length + teamIndex;
+
+            setCurrentInputIndex(absoluteIndex);
+            setFocusSignal((current) => current + 1);
+        }
     }
 
+    // Return to the setup screen.
     function returnToSetup() {
         setSettings(null);
         setTeamPicks([]);
         setDraftHistory([]);
+
+        setCurrentInputIndex(0);
+        setFocusSignal(0);
+
         setTimerStopSignal(0);
+        setTimerStartSignal(0);
     }
 
+    // Show setup screen before the draft begins.
     if (settings === null) {
         return <SetupScreen onStart={startDraft} />;
     }
@@ -73,6 +140,7 @@ function App() {
                 width: "100%"
             }}
         >
+            {/* Header and controls */}
             <div
                 style={{
                     display: "grid",
@@ -93,9 +161,17 @@ function App() {
                     <Timer
                         initialDurationMs={settings.timerDurationMs}
                         stopSignal={timerStopSignal}
+                        startSignal={timerStartSignal}
                     />
 
-                    <div className="topButtons" style={{ display: "flex", gap: "10px" }}>
+                    <div
+                        className="topButtons"
+                        style={{
+                            display: "flex",
+                            gap: "10px",
+                            flexWrap: "wrap"
+                        }}
+                    >
                         <button
                             onClick={undoDraft}
                             disabled={draftHistory.length === 0}
@@ -113,14 +189,30 @@ function App() {
                     </div>
                 </div>
 
-                <div id="headerGroup" style={{ textAlign: "center", justifySelf: "center" }}>
-                    <h1 style={{ margin: "0 0 5px 0" }}>New Website!</h1>
-                    <h3 style={{ margin: 0, color: "#666", fontWeight: "normal" }}>
+                <div
+                    id="headerGroup"
+                    style={{
+                        textAlign: "center",
+                        justifySelf: "center"
+                    }}
+                >
+                    <h1 style={{ margin: "0 0 5px 0" }}>
+                        New Website!
+                    </h1>
+
+                    <h3
+                        style={{
+                            margin: 0,
+                            color: "#666",
+                            fontWeight: "normal"
+                        }}
+                    >
                         Temp Layout
                     </h3>
                 </div>
             </div>
 
+            {/* Excel upload */}
             <div
                 className="inputBar"
                 style={{
@@ -134,10 +226,14 @@ function App() {
                 <ExcelUpload />
             </div>
 
+            {/* Draft table */}
             <div
                 className="table"
                 id="table"
-                style={{ marginTop: "20px", overflowX: "auto" }}
+                style={{
+                    marginTop: "20px",
+                    overflowX: "auto"
+                }}
             >
                 <table
                     border="1"
@@ -155,7 +251,10 @@ function App() {
                             {settings.teams.map((team, teamIndex) => (
                                 <th key={team.id || teamIndex}>
                                     <div>{team.name}</div>
-                                    <BudgetDisplay budget={team.startingBudget} />
+
+                                    <BudgetDisplay
+                                        budget={team.startingBudget}
+                                    />
                                 </th>
                             ))}
                         </tr>
@@ -166,16 +265,39 @@ function App() {
                             <tr key={roundIndex}>
                                 <td>{roundIndex + 1}</td>
 
-                                {round.map((player, teamIndex) => (
-                                    <td key={settings.teams[teamIndex].id || teamIndex}>
-                                        <PlayerLookup
-                                            player={player}
-                                            onPlayerSelect={(selectedPlayer) =>
-                                                selectPlayer(roundIndex, teamIndex, selectedPlayer)
-                                            }
-                                        />
-                                    </td>
-                                ))}
+                                {round.map((player, teamIndex) => {
+                                    const inputIndex =
+                                        roundIndex * settings.teams.length +
+                                        teamIndex;
+
+                                    const isCurrentInput =
+                                        currentInputIndex === inputIndex;
+
+                                    return (
+                                        <td
+                                            key={settings.teams[teamIndex].id || teamIndex}
+                                            className={isCurrentInput ? "active-pick" : ""}
+                                        >
+                                            <PlayerLookup
+                                                player={player}
+
+                                                focusSignal={
+                                                    isCurrentInput
+                                                        ? focusSignal
+                                                        : 0
+                                                }
+
+                                                onPlayerSelect={(selectedPlayer) =>
+                                                    selectPlayer(
+                                                        roundIndex,
+                                                        teamIndex,
+                                                        selectedPlayer
+                                                    )
+                                                }
+                                            />
+                                        </td>
+                                    );
+                                })}
                             </tr>
                         ))}
                     </tbody>
