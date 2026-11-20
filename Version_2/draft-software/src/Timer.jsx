@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 function Timer({
     initialDurationMs = 120000,
     stopSignal,
-    startSignal
+    startSignal,
+    resetSignal
 }) {
     const [time, setTime] = useState(initialDurationMs);
     const [originalTime, setOriginalTime] = useState(initialDurationMs);
@@ -52,6 +53,13 @@ function Timer({
         }
     }, [time]);
 
+    // Reset the timer without overriding the auto-start signal.
+    useEffect(() => {
+        if (resetSignal > 0) {
+            setTime(originalTime);
+        }
+    }, [resetSignal, originalTime]);
+    
     const setTimer = () => {
         const minutes = Number(minutesInput) || 0;
         const seconds = Number(secondsInput) || 0;

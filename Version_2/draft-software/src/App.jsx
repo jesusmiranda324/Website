@@ -14,12 +14,14 @@ function App() {
 
     const [timerStopSignal, setTimerStopSignal] = useState(0);
     const [timerStartSignal, setTimerStartSignal] = useState(0);
-
+    const [timerResetSignal, setTimerResetSignal] = useState(0);
+    
     const [currentInputIndex, setCurrentInputIndex] = useState(0);
     const [focusSignal, setFocusSignal] = useState(0);
 
     const [autoStartTimer, setAutoStartTimer] = useState(true);
     
+
     // Start a new draft using the setup screen settings.
     function startDraft(newSettings) {
         setSettings(newSettings);
@@ -74,6 +76,8 @@ function App() {
                 setCurrentInputIndex(i);
                 setFocusSignal((current) => current + 1);
 
+                // Reset the timer for the next selection.
+                setTimerResetSignal((current) => current + 1);
                 // Start the timer for the next selection if enabled.
                 if (autoStartTimer) {
                   setTimerStartSignal((current) => current + 1);
@@ -166,6 +170,7 @@ return;
                         initialDurationMs={settings.timerDurationMs}
                         stopSignal={timerStopSignal}
                         startSignal={timerStartSignal}
+                        resetSignal={timerResetSignal}
                     />
 
                     <div
