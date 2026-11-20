@@ -1,7 +1,11 @@
 
 import { useState, useEffect } from "react";
 
-function Timer({ initialDurationMs = 120000, stopSignal }) {
+function Timer({
+    initialDurationMs = 120000,
+    stopSignal,
+    startSignal
+}) {
     const [time, setTime] = useState(initialDurationMs);
     const [originalTime, setOriginalTime] = useState(initialDurationMs);
     const [isRunning, setIsRunning] = useState(false);
@@ -14,6 +18,13 @@ function Timer({ initialDurationMs = 120000, stopSignal }) {
     useEffect(() => {
         setIsRunning(false);
     }, [stopSignal]);
+
+    // Start the timer when App.jsx sends a start signal.
+    useEffect(() => {
+        if (startSignal > 0) {
+            setIsRunning(true);
+        }
+    }, [startSignal]);
 
     // Run the timer while isRunning is true.
     useEffect(() => {
@@ -53,7 +64,7 @@ function Timer({ initialDurationMs = 120000, stopSignal }) {
             return;
         }
 
-        const totalSeconds = ((minutes * 60) + seconds) * 1000;
+        const totalSeconds = (minutes * 60 + seconds) * 1000;
 
         setOriginalTime(totalSeconds);
         setTime(totalSeconds);
@@ -80,10 +91,21 @@ function Timer({ initialDurationMs = 120000, stopSignal }) {
                 </h1>
 
                 <div id="buttons">
-                    <button onClick={() => setIsRunning(true)}>Start</button>
-                    <button onClick={() => setShowSetTimer(true)}>Set</button>
-                    <button onClick={() => setIsRunning(false)}>Stop</button>
-                    <button onClick={resetTimer}>Reset</button>
+                    <button onClick={() => setIsRunning(true)}>
+                        Start
+                    </button>
+
+                    <button onClick={() => setShowSetTimer(true)}>
+                        Set
+                    </button>
+
+                    <button onClick={() => setIsRunning(false)}>
+                        Stop
+                    </button>
+
+                    <button onClick={resetTimer}>
+                        Reset
+                    </button>
                 </div>
 
                 {showSetTimer && (
@@ -103,6 +125,7 @@ function Timer({ initialDurationMs = 120000, stopSignal }) {
                         />
 
                         <button onClick={setTimer}>Set Timer</button>
+
                         <button onClick={() => setShowSetTimer(false)}>
                             Cancel
                         </button>
@@ -114,3 +137,4 @@ function Timer({ initialDurationMs = 120000, stopSignal }) {
 }
 
 export default Timer;
+1
