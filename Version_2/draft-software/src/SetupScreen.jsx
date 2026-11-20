@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function SetupScreen({ onStart }) {
   const [teamNames, setTeamNames] = useState(["Team 1", "Team 2"]);
-  const [budget, setBudget] = useState("200");
+  const [budget, setBudget] = useState("200000000");
   const [minutes, setMinutes] = useState("2");
   const [seconds, setSeconds] = useState("0");
   const [error, setError] = useState("");

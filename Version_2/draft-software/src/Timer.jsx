@@ -1,8 +1,8 @@
 import {useState, useEffect} from "react";
 
-function Timer() {
-    const [time, setTime] = useState(120000);
-    const [originalTime, setOriginalTime] = useState(120000);
+function Timer({ initialDurationMs = 120000 }) {
+    const [time, setTime] = useState(initialDurationMs);
+    const [originalTime, setOriginalTime] = useState(initialDurationMs);
     const [isRunning, setIsRunning] = useState(false);
 
     const [showSetTimer, setShowSetTimer] = useState(false);

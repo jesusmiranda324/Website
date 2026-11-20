@@ -1,21 +1,40 @@
-import React, {useState} from "react";
+
+import React, { useState } from "react";
 import Timer from "./Timer";
 import Spotify from "./Spotify.jsx";
 import ExcelUpload from "./ExcelUpload";
 import PlayerLookup from "./PlayerLookup";
 import BudgetDisplay from "./BudgetDisplay.jsx";
+import SetupScreen from "./SetupScreen.jsx";
 
 function App() {
-  const [teamPicks, setTeamPicks] = useState([null, null, null, null]);
+  const [settings, setSettings] = useState(null);
   const [draftHistory, setDraftHistory] = useState([]);
+  const [teamPicks, setTeamPicks] = useState([]);
 
-  function selectPlayer(teamIndex, player) {
-    setDraftHistory([...draftHistory, teamPicks]);
+  function startDraft(newSettings) {
+    setSettings(newSettings);
 
-    const updatedPicks = [...teamPicks];
-    updatedPicks[teamIndex] = player;
+    const emptyPicks = Array.from(
+      { length: newSettings.rounds },
+      () => Array(newSettings.teams.length).fill(null)
+    );
 
-    setTeamPicks(updatedPicks);
+    setTeamPicks(emptyPicks);
+    setDraftHistory([]);
+  }
+
+  function selectPlayer(roundIndex, teamIndex, player) {
+    setDraftHistory((history) => [
+      ...history,
+      teamPicks.map((round) => [...round])
+    ]);
+
+    setTeamPicks((currentPicks) => {
+      const updatedPicks = currentPicks.map((round) => [...round]);
+      updatedPicks[roundIndex][teamIndex] = player;
+      return updatedPicks;
+    });
   }
 
   function undoDraft() {
@@ -26,8 +45,19 @@ function App() {
     const previousPicks = draftHistory[draftHistory.length - 1];
 
     setTeamPicks(previousPicks);
-    setDraftHistory(draftHistory.slice(0, -1));
+    setDraftHistory((history) => history.slice(0, -1));
   }
+
+  function returnToSetup() {
+    setSettings(null);
+    setTeamPicks([]);
+    setDraftHistory([]);
+  }
+
+  if (settings === null) {
+    return <SetupScreen onStart={startDraft} />;
+  }
+
   return (
     <div
       className="top"
@@ -55,15 +85,21 @@ function App() {
             justifySelf: "start"
           }}
         >
-          <Timer />
+          <Timer initialDurationMs={settings.timerDurationMs} />
 
           <div className="topButtons" style={{ display: "flex", gap: "10px" }}>
             <div id="undo">
               <button
-                  onClick={undoDraft}
-                  disabled={draftHistory.length === 0}
+                onClick={undoDraft}
+                disabled={draftHistory.length === 0}
               >
                 Undo
+              </button>
+            </div>
+
+            <div id="returnToSetUp">
+              <button onClick={returnToSetup}>
+                Return to Set Up
               </button>
             </div>
 
@@ -73,14 +109,17 @@ function App() {
           </div>
         </div>
 
-        <div id="headerGroup" style={{ textAlign: "center", justifySelf: "center" }}>
+        <div
+          id="headerGroup"
+          style={{ textAlign: "center", justifySelf: "center" }}
+        >
           <div id="newWebsite">
             <h1 style={{ margin: "0 0 5px 0" }}>New Website!</h1>
           </div>
 
           <div id="temp">
             <h3 style={{ margin: 0, color: "#666", fontWeight: "normal" }}>
-              Temp Layout
+              Draft Layout
             </h3>
           </div>
         </div>
@@ -117,61 +156,33 @@ function App() {
             <tr style={{ backgroundColor: "#eaeaea" }}>
               <th>Round</th>
 
-              <th>
-                <div>Team 1</div>
-                <BudgetDisplay budget={150000000} />
-              </th>
-
-              <th>
-                <div>Team 2</div>
-                <BudgetDisplay budget={150000000} />
-              </th>
-
-              <th>
-                <div>Team 3</div>
-                <BudgetDisplay budget={150000000} />
-              </th>
-
-              <th>
-                <div>Team 4</div>
-                <BudgetDisplay budget={150000000} />
-              </th>
+              {settings.teams.map((team, teamIndex) => (
+                <th key={team.id || teamIndex}>
+                  <div>{team.name}</div>
+                  <BudgetDisplay budget={team.startingBudget} />
+                </th>
+              ))}
             </tr>
           </thead>
 
           <tbody>
-  <tr>
-    <td>1</td>
+            {teamPicks.map((round, roundIndex) => (
+              <tr key={roundIndex}>
+                <td>{roundIndex + 1}</td>
 
-    <td>
-      <PlayerLookup
-        player={teamPicks[0]}
-        onPlayerSelect={(player) => selectPlayer(0, player)}
-      />
-    </td>
-
-    <td>
-      <PlayerLookup
-        player={teamPicks[1]}
-        onPlayerSelect={(player) => selectPlayer(1, player)}
-      />
-    </td>
-
-    <td>
-      <PlayerLookup
-        player={teamPicks[2]}
-        onPlayerSelect={(player) => selectPlayer(2, player)}
-      />
-    </td>
-
-    <td>
-      <PlayerLookup
-        player={teamPicks[3]}
-        onPlayerSelect={(player) => selectPlayer(3, player)}
-      />
-    </td>
-  </tr>
-</tbody>
+                {round.map((player, teamIndex) => (
+                  <td key={settings.teams[teamIndex].id || teamIndex}>
+                    <PlayerLookup
+                      player={player}
+                      onPlayerSelect={(selectedPlayer) =>
+                        selectPlayer(roundIndex, teamIndex, selectedPlayer)
+                      }
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>
